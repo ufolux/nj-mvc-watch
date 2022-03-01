@@ -84,7 +84,7 @@ def notify(apt_data, config):
                     requests.get(f'https://api.telegram.org/{config["telegram_bot"]}/sendMessage?chat_id={config.get("telegram_chat_id")}&text={urllib.parse.quote_plus(apt)}')
                     if (open_in_browser):
                         url = apt.split("\n")[-1]
-                        os.system('open ' + url)
+                        webbrowser.open(url, 2)
 
 def filter_old_apt(new_apt, old_apt):
     return {apt: new_apt[apt] for apt in new_apt if apt not in old_apt}
