@@ -10,6 +10,7 @@ import os
 import sys
 from time import sleep
 from datetime import datetime
+import webbrowser
 
 RE_JS_VAR_DECLARATION = re.compile(r' *var +([A-Za-z0-9_]+) += +(\[[^;]*)[;\n\r]')
 RE_APT_DATE = re.compile(r'.*Next Available: (.*)')
@@ -70,6 +71,7 @@ def get_available_apt(apt_data):
 
 def notify(apt_data, config):
     citys = config.get('citys', '')
+    open_in_browser = config.get('open_in_browser', False)
     if config.get('telegram_notify', False):
         if not config.get('telegram_bot').startswith('bot'):
             config['telegram_bot'] = 'bot' + config['telegram_bot']
@@ -80,6 +82,9 @@ def notify(apt_data, config):
             if city in apt:    
                 if config.get('telegram_notify', False):
                     requests.get(f'https://api.telegram.org/{config["telegram_bot"]}/sendMessage?chat_id={config.get("telegram_chat_id")}&text={urllib.parse.quote_plus(apt)}')
+                    if (open_in_browser):
+                        url = apt.split("\n")[-1]
+                        os.system('open ' + url)
 
 def filter_old_apt(new_apt, old_apt):
     return {apt: new_apt[apt] for apt in new_apt if apt not in old_apt}

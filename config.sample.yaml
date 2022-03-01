@@ -5,3 +5,4 @@ telegram_bot: '' # Bot token of your telegram bot
 telegram_chat_id: '' # chat_id of the contact or group to send the messages to
 citys: # You will only be notified if there is avaiable seats in the MVC of this city
 - 'North Bergen' 
+open_in_browser: true # when the slot is avaiable, a browser tab will be opened
