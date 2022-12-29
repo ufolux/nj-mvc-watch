@@ -67,6 +67,8 @@ def pretty_apt(apt_data, appointment_type):
         yield f'{apt["Name"]}: {apt["FirstOpenSlot"].replace("<br/>", "")}\nhttps://telegov.njportal.com/njmvc/AppointmentWizard/{appointment_type}/{apt["Id"]}'
 
 def get_available_apt(apt_data):
+    if not apt_data:
+        apt_data = []
     return {apt: apt_data[apt] for apt in apt_data if 'No Appointments' not in apt_data[apt]['FirstOpenSlot']}
 
 def notify(apt_data, config):
